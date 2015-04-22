@@ -38,6 +38,14 @@ class Repository
     Commit.find self, sha
   end
 
+  def find_branch(name)
+    Branch.find self, name
+  end
+
+  def find_tag(name)
+    Tag.find self, name
+  end
+
   def logs(options = {})
     walker = Rugged::Walker.new rugged
     if (sha = options[:sha] || options[:to] || 'HEAD').present?

@@ -8,7 +8,7 @@ class Commit
     def all(repository)
       raise 'Repository is required' if repository.nil?
 
-      repository.logs.map { |rugged_commit| build_from_rugged_commit(repository, rugged_commit, {statistics: true}) }
+      repository.logs.map { |rugged_commit| build_from_rugged_commit(repository, rugged_commit) }
     end
 
     def build_from_rugged_commit(repository, rugged_commit, options = {})
@@ -22,7 +22,7 @@ class Commit
 
     def find(repository, sha)
       commit_rugged = repository.rugged.lookup sha
-      build_from_rugged_commit repository, commit_rugged, {files: true, patches: true, statistics: true}
+      build_from_rugged_commit repository, commit_rugged, {files: true, patches: true}
     rescue Rugged::ReferenceError, Rugged::InvalidError, Rugged::ObjectError
       nil
     end
@@ -35,7 +35,7 @@ class Commit
       rugged_diff = rugged_commit.parents[0].diff(rugged_commit)
     end
 
-    initialize_statistics rugged_diff if options[:statistics]
+    initialize_statistics rugged_diff
     initialize_files      rugged_diff if options[:files]
   end
 
