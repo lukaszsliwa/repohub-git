@@ -46,6 +46,10 @@ class Repository
     Tag.find self, name
   end
 
+  def find_blob(sha, path)
+    Blob.find self, sha, path
+  end
+
   def logs(options = {})
     walker = Rugged::Walker.new rugged
     if (sha = options[:sha] || options[:to] || 'HEAD').present?
