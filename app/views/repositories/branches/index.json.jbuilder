@@ -1,4 +1,5 @@
 json.array! @branches do |branch|
+  json.id branch.name
   json.name branch.name
-  json.last_commit_id branch.last_commit_id
+  json.sha branch.sha
 end

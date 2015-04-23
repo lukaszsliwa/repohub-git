@@ -1,4 +1,5 @@
 json.array! @tags do |tag|
+  json.id tag.name
   json.name tag.name
-  json.last_commit_id tag.last_commit_id
+  json.sha tag.sha
 end

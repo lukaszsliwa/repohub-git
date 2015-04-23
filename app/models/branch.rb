@@ -1,18 +1,18 @@
 class Branch
   include ActiveModel::Model
 
-  attr_accessor :name, :last_commit_id, :repository
+  attr_accessor :name, :sha, :repository
 
   class << self
     def all(repository)
       repository.rugged.branches.map do |rugged_branch|
-        Branch.new(name: rugged_branch.name, last_commit_id: rugged_branch.target.try(:oid), repository: repository)
+        Branch.new(name: rugged_branch.name, sha: rugged_branch.target.try(:oid), repository: repository)
       end
     end
 
     def find(repository, name)
       if (rugged_branch = repository.rugged.branches[name]).present?
-        Branch.new(name: name, last_commit_id: rugged_branch.target.try(:oid), repository: repository)
+        Branch.new(name: name, sha: rugged_branch.target.try(:oid), repository: repository)
       end
     end
   end

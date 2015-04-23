@@ -1,7 +1,5 @@
-json.sha @tree.sha
-json.path @tree.path
-json.contents @tree.contents do |content|
-  json.id content.id
+json.array! @contents do |content|
+  json.sha content.sha
   json.type content.type
   json.name content.name
   json.path content.path

@@ -9,9 +9,9 @@ Rails.application.routes.draw do
         resources :commits, controller: 'repositories/commits', constraints: {tag_id: /.+/, id: /.+/}
       end
       resources :contents, controller: 'repositories/contents'
-      resources :trees, only: [] do
-        resources :contents, controller: 'repositories/contents', constraints: {tree_id: /.+/, id: /.+/}
-        resources :blobs, controller: 'repositories/blobs', constraints: {blob_id: /.+/, id: /.+/}
+      resources :trees, controller: 'repositories/trees', only: :show do
+        resources :contents, controller: 'repositories/trees/contents', constraints: {tree_id: /.+/, id: /.+/}
+        resources :blobs, controller: 'repositories/trees/blobs', constraints: {tree_id: /.+/, id: /.+/}
         resources :raws, controller: 'repositories/raws', constraints: {blob_id: /.+/, id: /.+/}
       end
     end

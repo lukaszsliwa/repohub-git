@@ -10,13 +10,7 @@ class Tree
       sha = sha_or_name
 
       unless ((object = repository.rugged.lookup(sha)) rescue nil).present?
-        tag_or_branch = repository.rugged.branches[sha_or_name] || repository.rugged.tags[sha_or_name]
-        if tag_or_branch.present?
-          sha = tag_or_branch.target_id
-          object = repository.rugged.lookup sha
-        else
-          raise NotFoundException, "Object `#{sha_or_name}` not found"
-        end
+        raise NotFoundException, "Object `#{sha_or_name}` not found"
       end
 
       root_tree = if object.type == :tree
@@ -45,6 +39,7 @@ class Tree
             name: entry[:name],
             path: content_path,
             id: entry[:oid],
+            sha: entry[:oid],
             type: entry[:type],
             updated_at: updated_at,
             message: message,
