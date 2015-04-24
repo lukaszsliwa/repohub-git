@@ -1,7 +1,7 @@
 class Tree
   include ActiveModel::Model
 
-  attr_accessor :repository, :sha, :path, :contents
+  attr_accessor :id, :repository, :sha, :path, :contents
 
   class << self
     def find(repository, sha_or_name, path = nil)
@@ -46,7 +46,7 @@ class Tree
             commit_id: commit_id
         )
       end
-      Tree.new(repository: repository, sha: sha, path: path, contents: contents)
+      Tree.new(id: sha, repository: repository, sha: sha, path: path, contents: contents)
     end
 
     def find_id_by_path(repository, root_id, path)

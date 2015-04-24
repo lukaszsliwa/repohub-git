@@ -55,6 +55,7 @@ class Commit
     rugged_diff.patches.each_with_index do |rugged_patch, index|
       self.files[index].lines, self.files[index].additions, self.files[index].deletions = [], 0, 0
       rugged_patch.hunks.each do |rugged_hunk|
+        self.files[index].lines << CommitFileLine.new(hunk_id: rugged_hunk.object_id, content: rugged_hunk.header, status: 'header')
         rugged_hunk.lines.each do |rugged_line|
           number = rugged_line.new_lineno < 0 ? rugged_line.old_lineno : rugged_line.new_lineno
           self.files[index].lines << CommitFileLine.new(hunk_id: rugged_hunk.object_id, number: number, content: rugged_line.content, status: rugged_line.line_origin)

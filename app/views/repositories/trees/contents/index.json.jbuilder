@@ -1,4 +1,5 @@
 json.array! @contents do |content|
+  json.id content.sha
   json.sha content.sha
   json.type content.type
   json.name content.name

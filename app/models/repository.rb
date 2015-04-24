@@ -47,7 +47,7 @@ class Repository
   end
 
   def find_blob(sha, path)
-    Blob.find self, sha, path
+    Blob.find(self, sha, path)
   end
 
   def logs(options = {})
@@ -81,7 +81,7 @@ class Repository
   end
 
   def size
-    Find.find(path).sum &:size
+    `du -sb #{path}`.split(' ')[0].to_i
   end
 
   def rugged
