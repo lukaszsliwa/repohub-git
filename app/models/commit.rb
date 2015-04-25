@@ -50,7 +50,7 @@ class Commit
   def initialize_files(rugged_diff)
     self.files = []
     rugged_diff.deltas.each do |delta|
-      self.files << CommitFile.new(path: delta.new_file[:path], status: delta.status, id: delta.object_id)
+      self.files << CommitFile.new(path: delta.new_file[:path], status: delta.status, id: delta.object_id, commit: self)
     end
     rugged_diff.patches.each_with_index do |rugged_patch, index|
       self.files[index].lines, self.files[index].additions, self.files[index].deletions = [], 0, 0

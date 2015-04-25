@@ -13,6 +13,8 @@ json.files @commit.files do |file|
   json.status file.status
   json.additions file.additions
   json.deletions file.deletions
+  json.total_number_of_lines_before file.total_number_of_lines_before
+  json.total_number_of_lines_after file.total_number_of_lines_after
   json.lines file.lines do |line|
     json.hunk_id line.hunk_id
     json.status line.status

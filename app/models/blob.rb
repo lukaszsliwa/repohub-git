@@ -72,6 +72,10 @@ class Blob
     end
   end
 
+  def total_number_of_lines
+    content.lines.size
+  end
+
   def empty?
     !content || content == ''
   end
