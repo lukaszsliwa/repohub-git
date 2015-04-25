@@ -1,4 +1,4 @@
-class Repositories::RawsController < Repositories::ApplicationController
+class Repositories::Trees::RawsController < Repositories::Trees::ApplicationController
   def show
     @blob = @repository.find_blob params[:tree_id], params[:id]
 

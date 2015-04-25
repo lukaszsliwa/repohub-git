@@ -15,11 +15,15 @@ json.files @commit.files do |file|
   json.deletions file.deletions
   json.total_number_of_lines_before file.total_number_of_lines_before
   json.total_number_of_lines_after file.total_number_of_lines_after
-  json.lines file.lines do |line|
-    json.hunk_id line.hunk_id
-    json.status line.status
-    json.number line.number
-    json.content line.content
+  json.hunks file.hunks do |hunk|
+    json.id hunk.id
+    json.header hunk.header
+    json.lines hunk.lines do |line|
+      json.id line.id
+      json.status line.status
+      json.number line.number
+      json.content line.content
+    end
   end
 end
 json.created_at @commit.created_at

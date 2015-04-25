@@ -1,7 +1,7 @@
 class CommitFile
   include ActiveModel::Model
 
-  attr_accessor :id, :path, :status, :lines, :additions, :deletions, :commit
+  attr_accessor :id, :path, :status, :hunks, :additions, :deletions, :commit
 
   def changed_lines_of_code
     [additions, deletions].max

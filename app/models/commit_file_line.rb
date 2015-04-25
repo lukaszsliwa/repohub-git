@@ -1,5 +1,5 @@
 class CommitFileLine
   include ActiveModel::Model
 
-  attr_accessor :hunk_id, :number, :content, :content, :status
+  attr_accessor :id, :number, :content, :content, :status
 end

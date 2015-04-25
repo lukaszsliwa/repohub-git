@@ -10,9 +10,9 @@ Rails.application.routes.draw do
       end
       resources :contents, controller: 'repositories/contents'
       resources :trees, controller: 'repositories/trees', only: :show do
-        resources :contents, controller: 'repositories/trees/contents', constraints: {tree_id: /.+/, id: /.+/}
-        resources :blobs, controller: 'repositories/trees/blobs', constraints: {tree_id: /.+/, id: /.+/}
-        resources :raws, controller: 'repositories/raws', constraints: {blob_id: /.+/, id: /.+/}
+        resources :contents, controller: 'repositories/trees/contents', constraints: {id: /.+/}
+        resources :blobs, controller: 'repositories/trees/blobs', constraints: {id: /.+/}
+        resources :raws, controller: 'repositories/trees/raws', constraints: {id: /.+/}
       end
     end
 

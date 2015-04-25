@@ -53,15 +53,16 @@ class Commit
       self.files << CommitFile.new(path: delta.new_file[:path], status: delta.status, id: delta.object_id, commit: self)
     end
     rugged_diff.patches.each_with_index do |rugged_patch, index|
-      self.files[index].lines, self.files[index].additions, self.files[index].deletions = [], 0, 0
+      self.files[index].hunks, self.files[index].additions, self.files[index].deletions = [], 0, 0
       rugged_patch.hunks.each do |rugged_hunk|
-        self.files[index].lines << CommitFileLine.new(hunk_id: rugged_hunk.object_id, content: rugged_hunk.header, status: 'header')
+        lines = []
         rugged_hunk.lines.each do |rugged_line|
           number = rugged_line.new_lineno < 0 ? rugged_line.old_lineno : rugged_line.new_lineno
-          self.files[index].lines << CommitFileLine.new(hunk_id: rugged_hunk.object_id, number: number, content: rugged_line.content, status: rugged_line.line_origin)
+          lines << CommitFileLine.new(id: rugged_line.object_id, number: number, content: rugged_line.content, status: rugged_line.line_origin)
           self.files[index].additions += 1 if rugged_line.addition?
           self.files[index].deletions += 1 if rugged_line.deletion?
         end
+        self.files[index].hunks << CommitFileHunk.new(id: rugged_hunk.object_id, lines: lines, header: rugged_hunk.header)
       end
     end
   end
