@@ -2,7 +2,7 @@ class Blob
   include ActiveModel::Model
 
 
-  attr_accessor :name, :path, :size, :content, :mode, :id, :commit_id
+  attr_accessor :repository, :name, :path, :size, :content, :mode, :id, :commit_id
 
   class << self
     def find(repository, sha, path = nil)
@@ -27,6 +27,7 @@ class Blob
               mode: blob_entry[:filemode].to_s(8),
               path: path,
               commit_id: sha,
+              repository: repository
           )
         end
       end
@@ -39,6 +40,7 @@ class Blob
           id: blob.oid,
           size: blob.size,
           content: blob.content,
+          repository: repository
       )
     end
 
@@ -78,5 +80,9 @@ class Blob
 
   def empty?
     !content || content == ''
+  end
+
+  def commit
+    Commit.find repository, commit_id if commit_id.present?
   end
 end
