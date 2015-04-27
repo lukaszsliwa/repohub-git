@@ -16,7 +16,19 @@ class Repository
     def find(id)
       @repository = Repository.new(id: id, name: id)
       unless @repository.exists?
-        raise NotFoundException, "Repository #{id} not found"
+        raise Repository::ResourceNotFound.new(resource: @repository)
+      end
+      @repository
+    end
+
+    def create(attributes = {})
+      name, id = attributes[:name], attributes[:name]
+      @repository = Repository.new(name: name, id: id)
+      if @repository.exists?
+        @repository.errors.add :base, 'Name, id or handle is already exist.'
+        raise Repository::ResourceInvalid.new(resource: @repository)
+      else
+        @rugged = Rugged::Repository.init_at("/home/git/#{id}.git", :bare)
       end
       @repository
     end
@@ -86,5 +98,17 @@ class Repository
 
   def rugged
     @rugged ||= Rugged::Repository.new path
+  end
+
+  class ResourceException < Exception
+    include ActiveModel::Model
+
+    attr_accessor :resource
+  end
+
+  class ResourceNotFound < ResourceException
+  end
+
+  class ResourceInvalid < ResourceException
   end
 end
