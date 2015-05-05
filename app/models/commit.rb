@@ -5,10 +5,10 @@ class Commit
                 :additions, :deletions, :files, :created_at, :rugged_commit, :parents
 
   class << self
-    def all(repository)
+    def all(repository, options = {})
       raise 'Repository is required' if repository.nil?
 
-      repository.logs.map { |rugged_commit| build_from_rugged_commit(repository, rugged_commit) }
+      repository.logs(options).map { |rugged_commit| build_from_rugged_commit(repository, rugged_commit) }
     end
 
     def build_from_rugged_commit(repository, rugged_commit, options = {})

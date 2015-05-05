@@ -7,5 +7,6 @@ json.array! @commits do |commit|
   json.author_email commit.author_email
   json.additions commit.additions
   json.deletions commit.deletions
+  json.parents commit.parents
   json.created_at commit.created_at
 end

@@ -2,7 +2,7 @@ class Repositories::CommitsController < Repositories::ApplicationController
   before_filter :find_reference
 
   def index
-    @commits = @reference.commits
+    @commits = @reference.commits params.slice(:from, :to, :sha)
   end
 
   def show

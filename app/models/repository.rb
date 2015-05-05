@@ -34,8 +34,8 @@ class Repository
     end
   end
 
-  def commits
-    Commit.all self
+  def commits(options = {})
+    Commit.all(self, options)
   end
 
   def branches

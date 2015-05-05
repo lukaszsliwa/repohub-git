@@ -17,9 +17,9 @@ class Branch
     end
   end
 
-  def commits
+  def commits(options = {})
     target_id = repository.rugged.branches[name].target_id
-    repository.logs(sha: target_id).map do |rugged_commit|
+    repository.logs({sha: target_id}.merge(options)).map do |rugged_commit|
       Commit.build_from_rugged_commit repository, rugged_commit
     end
   end
