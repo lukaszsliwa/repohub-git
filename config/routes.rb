@@ -1,13 +1,11 @@
 Rails.application.routes.draw do
   constraints(format: 'json') do
     resources :repositories do
-      resources :commits, controller: 'repositories/commits'
-      resources :branches, controller: 'repositories/branches', constraints: {id: /.+/} do
-        resources :commits, controller: 'repositories/commits', constraints: {branch_id: /.+/, id: /.+/}
+      resources :commits, controller: 'repositories/commits' do
+        get :first, on: :collection
       end
-      resources :tags, controller: 'repositories/tags', constraints: {id: /.+/} do
-        resources :commits, controller: 'repositories/commits', constraints: {tag_id: /.+/, id: /.+/}
-      end
+      resources :branches, controller: 'repositories/branches', constraints: {id: /.+/}
+      resources :tags, controller: 'repositories/tags', constraints: {id: /.+/}
       resources :contents, controller: 'repositories/contents'
       resources :trees, controller: 'repositories/trees', only: :show do
         resources :contents, controller: 'repositories/trees/contents', constraints: {id: /.+/}

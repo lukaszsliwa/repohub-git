@@ -1,3 +1,4 @@
+json.id @commit.sha
 json.sha @commit.sha
 json.message @commit.message
 json.committer_name @commit.committer_name

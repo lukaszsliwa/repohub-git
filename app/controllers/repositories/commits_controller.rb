@@ -9,6 +9,10 @@ class Repositories::CommitsController < Repositories::ApplicationController
     @commit = @reference.find_commit params[:id]
   end
 
+  def first
+    @commit = @reference.commits(params.slice(:from, :to, :sha).merge(limit: 1)).first
+  end
+
   private
 
   def find_reference
