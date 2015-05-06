@@ -8,6 +8,8 @@ json.author_email @commit.author_email
 json.additions @commit.additions
 json.deletions @commit.deletions
 json.parents @commit.parents
+json.branches @commit.branches
+json.tags @commit.tags
 json.files @commit.files do |file|
   json.id file.id
   json.path file.path

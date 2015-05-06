@@ -66,4 +66,12 @@ class Commit
       end
     end
   end
+
+  def branches
+    `cd #{repository.path} && git branch --contains #{sha}`.split("\n").map {|branch_name| branch_name.split(' ').last }
+  end
+
+  def tags
+    `cd #{repository.path} && git tag --contains #{sha}`.split("\n").map {|tag_name| tag_name.split(' ').last }
+  end
 end
