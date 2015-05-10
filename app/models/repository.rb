@@ -68,12 +68,12 @@ class Repository
       walker.push sha
     end
 
-    walker.hide options[:from] if options[:from]
+    walker.hide options[:from] if options[:from] && options[:from] != '0000000000000000000000000000000000000000'
 
     commits = []
 
     walker.sorting(Rugged::SORT_DATE)
-    walker.each do |rugged_commit|
+    walker.each(offset: options[:offset].to_i, limit: options[:limit].to_i) do |rugged_commit|
       commits.push rugged_commit
     end
 
